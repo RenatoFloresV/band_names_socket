@@ -23,19 +23,17 @@ class SocketService with ChangeNotifier {
   }
 
   void _initConfig() {
-    _socket = IO.io('http://192.168.1.38:3000/', {
+    _socket = IO.io('https://socketio-server-production-6264.up.railway.app/', {
       'transports': ['websocket'],
       'autoConnect': true
     });
 
     _socket.on('connect', (_) {
-      print('connect');
       _serverStatus = ServerStatus.online;
       notifyListeners();
     });
 
     _socket.on('disconnect', (_) {
-      print('disconnect');
       _serverStatus = ServerStatus.offline;
       notifyListeners();
     });
