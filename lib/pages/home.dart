@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:pie_chart/pie_chart.dart';
+
 import '../models/band.dart';
 import '../services/socket_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,9 +71,19 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: ListView.builder(
-        itemCount: bands.length,
-        itemBuilder: (context, i) => _bandTile(bands[i]),
+      body: Column(
+        children: [
+          if (bands.isNotEmpty) ...[
+            _showGraph(),
+            const SizedBox(height: 10.0),
+          ],
+          Expanded(
+            child: ListView.builder(
+              itemCount: bands.length,
+              itemBuilder: (context, i) => _bandTile(bands[i]),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 1,
@@ -186,5 +198,30 @@ class _HomePageState extends State<HomePage> {
       socketService.emit('add-band', {'name': name});
     }
     Navigator.pop(context);
+  }
+
+  Widget _showGraph() {
+    Map<String, double> dataMap = {};
+
+    for (var band in bands) {
+      dataMap.putIfAbsent(band.name, () => band.votes.toDouble());
+    }
+
+    return PieChart(
+        dataMap: dataMap,
+        animationDuration: const Duration(milliseconds: 800),
+        chartLegendSpacing: 32.0,
+        chartType: ChartType.disc,
+        chartRadius: MediaQuery.of(context).size.width / 3.2,
+        legendOptions: const LegendOptions(
+          showLegendsInRow: false,
+          legendPosition: LegendPosition.right,
+          legendShape: BoxShape.circle,
+          showLegends: true,
+          legendTextStyle: TextStyle(color: Colors.black),
+        ),
+        chartValuesOptions: const ChartValuesOptions(
+          decimalPlaces: 0,
+        ));
   }
 }
