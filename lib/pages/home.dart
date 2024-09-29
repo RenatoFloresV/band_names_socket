@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'dart:math';
 
-import 'package:band_names/models/band.dart';
-import 'package:band_names/services/socket_service.dart';
+import '../models/band.dart';
+import '../services/socket_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,4 +1,4 @@
-import 'package:band_names/pages/home.dart';
+import 'pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

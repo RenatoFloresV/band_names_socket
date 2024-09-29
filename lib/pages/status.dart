@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:band_names/services/socket_service.dart';
+import '../services/socket_service.dart';
 
 class StatusPage extends StatelessWidget {
   const StatusPage({super.key});
